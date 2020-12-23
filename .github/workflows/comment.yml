@@ -1,6 +1,6 @@
 name: Pull Request Comment Trigger
 on:
-  issue_comment:
+  pull_request_review_comment:
     types: [created]
 
 jobs:
@@ -18,4 +18,4 @@ jobs:
 
       - name: Test
         shell: bash
-        run: ./build_and_test.sh
+        run: echo "Hi"
