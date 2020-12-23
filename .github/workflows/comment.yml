@@ -16,19 +16,18 @@ jobs:
         with:
           go-version: 1.14
 
-      - name: Test
-        shell: bash
-        run: git log
-
-      - uses: khan/pull-request-comment-trigger@master
-        id: check
+      - name: Github API Request
+        id: request
+        uses: octokit/request-action@v2.0.0
         with:
-          trigger: 'ci'
-          reaction: rocket
+          route: ${{ github.event.issue.pull_request.url }}
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-      - run: 'echo Found it!'
-        if: steps.check.outputs.triggered == 'true'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/checkout@v1
-      - run: ' run'
+      - name: Checkout PR Branch
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ fromJson(steps.request.outputs.data).head.repo.full_name }}
+          ref: ${{ steps.pr_data.outputs.branch }}
+
