@@ -1,7 +1,5 @@
 name: Pull Request Comment Trigger
 on:
-  pull_request:
-    types: [opened]
   issue_comment:
     types: [created]
 
