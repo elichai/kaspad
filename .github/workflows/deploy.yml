@@ -43,6 +43,7 @@ jobs:
 
       - name: Build on Windows
         if: runner.os == 'Windows'
+        shell: bash
         run: |
           binary="binary=kaspad-${{ github.ref }}-win64.exe"
           echo "binary=${binary}" >> $GITHUB_ENV
@@ -64,3 +65,4 @@ jobs:
           upload_url: "https://uploads.github.com/repos/${{ github.repository }}/releases/1/assets{?name,label}"
           asset_path: "./${{ env.binary }}"
           asset_name: "${{ env.binary }}"
+          asset_content_type: application/zip
