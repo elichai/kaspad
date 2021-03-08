@@ -39,7 +39,8 @@ jobs:
         run: |
           binary="kaspad-${{ github.event.release.tag_name }}-linux"
           echo "binary=${binary}" >> $GITHUB_ENV
-          go build -ldflags="-extldflags=-static -s -w" -tags netgo,osusergo -o "${binary}"
+          go build -v -ldflags="-extldflags=-static -s -w" -tags netgo,osusergo -o "${binary}"
+          ls
 
       - name: Build on Windows
         if: runner.os == 'Windows'
@@ -47,14 +48,16 @@ jobs:
         run: |
           binary="kaspad-${{ github.event.release.tag_name }}-win64.exe"
           echo "binary=${binary}" >> $GITHUB_ENV
-          go build -ldflags="-extldflags=-s -w" -o "${binary}"
+          go build -v -ldflags="-extldflags=-s -w" -o "${binary}"
+          ls
 
       - name: Build on MacOS
         if: runner.os == 'macOS'
         run: |
           binary="binary=kaspad-${{ github.event.release.tag_name }}-osx.dmg"
           echo "binary=${binary}" >> $GITHUB_ENV
-          go build -ldflags="-extldflags=-s -w" -o "${binary}"
+          go build -v -ldflags="-extldflags=-s -w" -o "${binary}"
+          ls
 
 
       - name: Upload Release Asset
