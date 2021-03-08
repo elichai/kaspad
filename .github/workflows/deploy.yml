@@ -37,7 +37,7 @@ jobs:
         # `-static` - means static link everything, `-tags netgo,osusergo` means use pure go replacements for "os/user" and "net"
         # `-s -w` strips the binary to produce smaller size binaries
         run: |
-          binary="kaspad-${{ github.ref }}-linux"
+          binary="kaspad-${{ github.event.release.tag_name }}-linux"
           echo "binary=${binary}" >> $GITHUB_ENV
           go build -ldflags="-extldflags=-static -s -w" -tags netgo,osusergo -o "${binary}"
 
@@ -45,14 +45,14 @@ jobs:
         if: runner.os == 'Windows'
         shell: bash
         run: |
-          binary="kaspad-${{ github.ref }}-win64.exe"
+          binary="kaspad-${{ github.event.release.tag_name }}-win64.exe"
           echo "binary=${binary}" >> $GITHUB_ENV
           go build -ldflags="-extldflags=-s -w" -o "${binary}"
 
       - name: Build on MacOS
         if: runner.os == 'macOS'
         run: |
-          binary="binary=kaspad-${{ github.ref }}-osx.dmg"
+          binary="binary=kaspad-${{ github.event.release.tag_name }}-osx.dmg"
           echo "binary=${binary}" >> $GITHUB_ENV
           go build -ldflags="-extldflags=-s -w" -o "${binary}"
 
